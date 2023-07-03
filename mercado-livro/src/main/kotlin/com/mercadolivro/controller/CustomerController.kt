@@ -6,13 +6,16 @@ import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/customer")
+@RequestMapping("customer")
 class CustomerController {
 
     val customers = mutableListOf<CustomerModel>()
 
     @GetMapping
-    fun getAll(): MutableList<CustomerModel> {
+    fun getAll(@RequestParam name: String?): List<CustomerModel> {
+        name?.let {
+            return customers.filter { it.name.contains(name, true) }
+        }
         return customers
     }
 
@@ -33,7 +36,7 @@ class CustomerController {
         customers.add(CustomerModel(id, customer.name, customer.email))
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun update(@PathVariable id: String, @RequestBody customer: PutCustomerRequest) {
         customers.filter { it.id == id }.first().let {
@@ -42,7 +45,7 @@ class CustomerController {
         }
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun delete(@PathVariable id: String) {
         customers.removeIf { it.id == id }
