@@ -8,6 +8,7 @@ spring:
     url: jdbc:mysql://localhost:3306/mercadolivro?createDatabaseIfNotExist=true
     username: root
     password: 123456
+  flyway.baseline-on-migrate: true
   Jackson:
     default-property-inclusion: non-null
   mvc:
