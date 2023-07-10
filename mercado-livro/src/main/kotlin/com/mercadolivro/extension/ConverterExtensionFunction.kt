@@ -38,7 +38,7 @@ fun PutBookRequest.toBookModel(previousValue: BookModel): BookModel{
     )
 }
 
-fun CustomerModel.toResponse(): CustomerResponse {
+fun CustomerModel.toCustomerResponse(): CustomerResponse {
     return CustomerResponse(
         id = this.id,
         name = this.name,
