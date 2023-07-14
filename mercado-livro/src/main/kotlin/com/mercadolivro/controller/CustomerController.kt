@@ -3,8 +3,10 @@ package com.mercadolivro.controller
 import com.mercadolivro.controller.request.PostCustomerRequest
 import com.mercadolivro.controller.request.PutCustomerRequest
 import com.mercadolivro.controller.response.CustomerResponse
+import com.mercadolivro.controller.response.PageResponse
 import com.mercadolivro.extension.toCustomerModel
 import com.mercadolivro.extension.toCustomerResponse
+import com.mercadolivro.extension.toPageResponse
 import com.mercadolivro.extension.toResponse
 import com.mercadolivro.security.UserCanOnlyAccessTheirOwnResource
 import com.mercadolivro.service.CustomerService
@@ -26,8 +28,8 @@ class CustomerController(
     fun getAll(
         @PageableDefault(page = 0, size = 10) pageable: Pageable,
         @RequestParam name: String?
-    ): Page<CustomerResponse> {
-        return customerService.getAll(name, pageable).map { it.toCustomerResponse() }
+    ): PageResponse<CustomerResponse> {
+        return customerService.getAll(name, pageable).map { it.toCustomerResponse() }.toPageResponse()
     }
 
     @GetMapping("/{id}")
